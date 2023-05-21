@@ -12,7 +12,7 @@ ui <- fluidPage(
                               "Cluster 7", "Cluster 8", "Cluster 9", 
                               "Cluster 10"),
                   selected = "Cluster 1"),
-      selectInput("select_stock", "Select Stock:",
+      selectInput("select_stock", "Select stock:",
                   choices = sort(group_lis[[1]]$stock_id),
                   selected = sort(group_lis[[1]]$stock_id)[1]),
       numericInput(inputId = "time_id", label = "Enter index of time ID:", value = 1),
@@ -36,14 +36,13 @@ ui <- fluidPage(
                                   "MAE" = "MAE", "QLIKE" = "QLIKE"),selected = "RMSE")
     ),
     mainPanel(
-      h2("Model performance for Clusters"),
+      h2("Model Performance Comparison for Stocks"),
       plotOutput(outputId = "plot2")
     )
   )
 )
 
 server <- function(input, output, session) {
-  # Define reactive expression to update fruit subtype choices
   observeEvent(input$select_cluster, {
     stock_choices <- switch(input$select_cluster,
                             "Cluster 1" = sort(group_lis[[1]]$stock_id),
@@ -60,7 +59,6 @@ server <- function(input, output, session) {
     updateSelectInput(session, "select_stock", choices = stock_choices)
   })
   
-  # Display selected fruit
   output$selected_cluster <- renderText({
     paste0("Actual volatility vs Predicted volatility (", input$select_cluster, ")")
   })
@@ -72,7 +70,6 @@ server <- function(input, output, session) {
     stock_id = as.character(input$select_stock)
     
     show_models <- input$checkGroup
-    print(show_models)
     draw_res_plot(stock_id, time_id, show_models)
   })
   
