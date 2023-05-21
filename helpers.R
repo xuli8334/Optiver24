@@ -102,7 +102,7 @@ plot_performance <- function(stock_id, method_type="RMSE") {
   boxplot(vectors, 
           names = names(vectors), 
           col = ifelse(names(vectors) == names(vectors)[lowest_mean_idx], "red", "gray"),
-          main = paste0("Models performance at cluster ", stock_id), 
+          main = paste0("Models performance at stock ", stock_id), 
           ylab = method_type,
           outline = FALSE)
 }
